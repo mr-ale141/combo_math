@@ -5,13 +5,11 @@
 #include "DoubleSquare.h"
 
 /*
-Содержимое файла с грузами:
+Example files:
 C11 C12 .. C1N
 C21 C22 .. C2N
 ...
 CN1 CN2 .. CNN
-
-Содержимое для файла с расстояниями аналогичен
 */
 
 bool IsCorrectInputData(int argc)

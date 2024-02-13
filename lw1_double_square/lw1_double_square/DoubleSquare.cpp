@@ -1,6 +1,6 @@
 #include "DoubleSquare.h"
 
-unsigned int GetMinR(
+size_t GetMinR(
 	const int N,
 	const std::vector<std::vector<int>>& const cargoMatrix,
 	const std::vector<std::vector<int>>& const locationMatrix,
@@ -12,13 +12,13 @@ unsigned int GetMinR(
 	for (int i = 0; i < N; i++)	companyes.push_back(i);
 	std::vector<int> locations;
 	for (int i = 0; i < N; i++)	locations.push_back(i);
-	unsigned int minR = UINT_MAX;
+	size_t minR = UINT_MAX;
 
 	do
 	{
 		do
 		{
-			unsigned long long R = 0ULL;
+			size_t R = 0;
 			for (int i = 0; i < N; i++)
 			{
 				for (int j = 0; j < N; j++)
@@ -43,11 +43,11 @@ unsigned int GetMinR(
 			/*
 			std::cout << "Company : ";
 			for (auto i : companyes)
-				std::cout << i + 1 << ' ';
+			std::cout << i + 1 << ' ';
 			std::cout << std::endl;
 			std::cout << "Location: ";
 			for (auto i : locations)
-				std::cout << i + 1 << ' ';
+			std::cout << i + 1 << ' ';
 			std::cout << std::endl;
 			std::cout << "Cur R = " << R << std::endl;
 			*/

@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <climits>
 
-unsigned int GetMinR(
+size_t GetMinR(
 	const int N,
 	const std::vector<std::vector<int>>& const cargoMatrix,
 	const std::vector<std::vector<int>>& const locationMatrix,

@@ -15,10 +15,10 @@
 int main(int argc, char* argv)
 {
 	int maxWeight = 250;
-	//std::vector<int> prices{ 10,  5, 20, 100,   1, 30,  9, 14, 50, 47 };
-	std::vector<int> prices{50};
-	//std::vector<int> weights{ 1, 50, 15,  90, 100, 50, 18, 69, 48, 90 };
-	std::vector<int> weights{251};
+	std::vector<int> prices{ 10,  5, 20, 100,   1, 30,  9, 14, 50, 47 };
+	// std::vector<int> prices{50};
+	std::vector<int> weights{ 1, 50, 15,  90, 100, 50, 18, 69, 48, 90 };
+	// std::vector<int> weights{251};
 	std::vector<int> backpack;
 
 	PutInBackpack(backpack, prices, weights, maxWeight);

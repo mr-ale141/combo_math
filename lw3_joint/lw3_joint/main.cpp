@@ -4,39 +4,55 @@
 
 const int MAXN = 50;
 
-std::vector<int> g[MAXN];
+std::vector<int> graph[MAXN];
 bool used[MAXN];
-int timer, tin[MAXN], fup[MAXN];
+int timer;
+int tin[MAXN];
+int fup[MAXN]; // min (tin[current], tin[parent], fup[to])
 
-void PrintJoint(int v)
+void PrintArticulationPoint(int point)
 {
-	std::cout << "Joint = " << v << std::endl;
+	std::cout << "Articulation Point = " << point << std::endl;
 }
+
+//current - Articulation Point if:
+//fup[to] >= tin[current] 
 
 //used[to] == false                   - dfs first
 //used[to] == true && to != parrent   - back path
 //to == parrent                       - back loop
 
-void FindJoint(int v, int p = -1) {
-	used[v] = true;
-	tin[v] = fup[v] = timer++;
+void FindArticulationPoint(int current, int parent = -1)
+{
+	used[current] = true;
+	tin[current] = fup[current] = timer++;
 	int children = 0;
-	for (size_t i = 0; i < g[v].size(); ++i) {
-		int to = g[v][i];
-		if (to == p) 
+	for (size_t i = 0; i < graph[current].size(); ++i)
+	{
+		int to = graph[current][i];
+		if (to == parent)
+		{
 			continue;
+		}
 		if (used[to])
-			fup[v] = std::min(fup[v], tin[to]);
-		else {
-			FindJoint(to, v);
-			fup[v] = std::min(fup[v], fup[to]);
-			if (fup[to] >= tin[v] && p != -1)
-				PrintJoint(v);
+		{
+			fup[current] = std::min(fup[current], tin[to]);
+		}
+		else
+		{
+			FindArticulationPoint(to, current);
+			fup[current] = std::min(fup[current], fup[to]);
+			if (fup[to] >= tin[current] && parent != -1)
+			{
+				PrintArticulationPoint(current);
+			}
 			++children;
 		}
 	}
-	if (p == -1 && children > 1)
-		PrintJoint(v);
+	if (parent == -1 && children > 1)
+	{
+		PrintArticulationPoint(current);
+	}
 }
 
 /*
@@ -102,14 +118,16 @@ g[4] = {2,3};
 
 int main() {
 	int n = 5;
-	g[0] = { 1,2 };
-	g[1] = { 0,2 };
-	g[2] = { 0,1,3,4 };
-	g[3] = { 2,4 };
-	g[4] = { 2,3 };
+	graph[0] = { 1,2 };
+	graph[1] = { 0,2 };
+	graph[2] = { 0,1,3,4 };
+	graph[3] = { 2,4 };
+	graph[4] = { 2,3 };
 
 	timer = 0;
 	for (int i = 0; i < n; ++i)
+	{
 		used[i] = false;
-	FindJoint(0);
+	}
+	FindArticulationPoint(0);
 }

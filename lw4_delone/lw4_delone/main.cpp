@@ -4,6 +4,8 @@
 #include <unordered_set>
 #include "DelaunayParser.h"
 
+// C:\IPS\combo_math\img2points\img2points\out\build\x64-debug\img2points\img2points.exe
+
 const std::string fileName = "triangulation.html";
 std::ofstream file(fileName);
 const int width = 800;

@@ -39,3 +39,5 @@ packages
 *.db
 Release
 *.opendb
+
+build

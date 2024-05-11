@@ -41,3 +41,4 @@ Release
 *.opendb
 
 build
+/lw5_tree_count/lw5_tree_count/out.txt

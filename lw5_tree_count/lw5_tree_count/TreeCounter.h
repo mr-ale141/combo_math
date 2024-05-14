@@ -22,7 +22,7 @@ public:
     Matrix GetMinor_1_1() const;
 private:
     static void AddLine(Matrix& matrix, size_t y);
-    static void AddWithMultiplyLine(Matrix& matrix, size_t line, double value);
+    static void AddWithMultiplyLine(Matrix& matrix, size_t line, size_t sumLine, double value);
     void SetMatrix(std::istream& in);
     void SetGraph(std::istream& in);
     void SetKirgofMatrix();

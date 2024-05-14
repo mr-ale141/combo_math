@@ -26,6 +26,9 @@
     <Text Include="in.txt">
       <Filter>Source Files</Filter>
     </Text>
+    <Text Include="full.txt">
+      <Filter>Source Files</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TreeCounter.h">

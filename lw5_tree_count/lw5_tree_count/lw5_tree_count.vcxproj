@@ -135,6 +135,7 @@
     <ClCompile Include="TreeCounter.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="full.txt" />
     <Text Include="in.txt" />
   </ItemGroup>
   <ItemGroup>

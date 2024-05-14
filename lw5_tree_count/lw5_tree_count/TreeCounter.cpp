@@ -126,12 +126,12 @@ void TreeCounter::AddLine(Matrix& matrix, size_t line)
     }
 }
 
-void TreeCounter::AddWithMultiplyLine(Matrix& matrix, size_t line, double value)
+void TreeCounter::AddWithMultiplyLine(Matrix& matrix, size_t line, size_t sumLine, double value)
 {
     size_t size = matrix.size();
     for (size_t x = 0; x < size; ++x)
     {
-        matrix[line][x] += matrix[line - 1][x] * value;
+        matrix[line][x] += matrix[sumLine][x] * value;
     }
 }
 
@@ -142,25 +142,36 @@ double TreeCounter::GetCountTree() const
     {
         for (size_t x = 0; x < y; ++x)
         {
-            if (minor[y][x] == 0)
-                continue;
-            if (minor[y][x] != -1)
-                throw std::invalid_argument("Value in matrix outside the diagonal is not -1");
-            double upValue = minor[y - 1][x];
-            if (upValue == 1)
-                AddLine(minor, y);
-            else
+            double value = minor[y][x];
+            if (value == 0)
             {
-                AddWithMultiplyLine(minor, y, 1 / upValue);
+                continue;
             }
+            size_t sub = 1;
+            size_t sumLine = y - sub;
+            double upValue = minor[sumLine][x];
+            if (upValue == 1)
+            {
+                AddLine(minor, y);
+                continue;
+            }
+            while (upValue == 0)
+            {
+                ++sub;
+                sumLine = (y - sub) % minor.size();
+                upValue = minor[sumLine][x];
+            }
+
+            AddWithMultiplyLine(minor, y, sumLine, -value / upValue);
+
+            std::cout << "Minor after transformations is" << std::endl;
+            PrintMatrix(std::cout, minor);
         }
     }
-    std::cout << "Minor after transformations is" << std::endl;
-    PrintMatrix(std::cout, minor);
 
     double answer = 1.;
 
     for (size_t i = 0; i < minor.size(); ++i)
         answer *= minor[i][i];
-    return answer;
+    return answer; // static_cast<int>
 }

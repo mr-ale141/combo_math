@@ -1,3 +1,11 @@
+﻿/*
+[# 100] Для орграфа 𝐺 = (𝑉, 𝐸) требуется найти максимальный поток алгоритмом «поднять-в-начало».
+Ввести класс сети.
+Пропускная способность задаётся матрицей 𝑛×𝑛, где
+источник – вершина с номером 0.
+приёмник – вершина с номером 𝑛−1.
+Максимальный поток вывести матрицей 𝑛×𝑛.
+*/
 #include <iostream>
 #include "MaxFlowFinder.h"
 
@@ -10,7 +18,7 @@ int main()
 
     std::cin >> numberOfVertices >> numberOfEdges >> start >> finish;
 
-    Network<int> network(numberOfVertices, start, finish);
+    Network network(numberOfVertices, start, finish);
 
     for (size_t i = 0; i < numberOfEdges; ++i)
     {
@@ -19,14 +27,16 @@ int main()
         int capacity;
 
         std::cin >> from >> to >> capacity;
-        network.addEdge(from, to, capacity);
+        network.AddEdge(from, to, capacity);
     }
 
-    auto& finder = MaxFlowFinder<int>::getInstance();
+    auto& finder = MaxFlowFinder::GetInstance();
 
-    int maximumFlow = finder.findMaximumFlow(&network);
+    int maximumFlow = finder.FindMaximumFlow(&network);
 
-    std::cout << maximumFlow;
+    finder.PrintMaxFlowAsMatrix();
+
+    std::cout << "Max flow = " << maximumFlow;
 
     return 0;
 }

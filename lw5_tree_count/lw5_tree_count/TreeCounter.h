@@ -19,8 +19,9 @@ public:
     static void PrintMatrix(std::ostream& out, Matrix matrix);
     double GetCountTree() const;
     Matrix GetKirgof() const;
-    Matrix GetMinor_1_1() const;
+    Matrix GetMinor() const;
 private:
+    static bool SwapColumn(Matrix& minor, size_t x);
     static void AddLine(Matrix& matrix, size_t y);
     static void AddWithMultiplyLine(Matrix& matrix, size_t line, size_t sumLine, double value);
     void SetMatrix(std::istream& in);

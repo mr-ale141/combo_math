@@ -7,11 +7,11 @@ int main()
         TreeCounter matrix(std::cin);
 
         Matrix kirgofMatrix = matrix.GetKirgof();
-        Matrix minor_1_1 = matrix.GetMinor_1_1();
+        Matrix minor_1_1 = matrix.GetMinor();
 
         std::cout << "Kirgof Matrix is:" << std::endl;
         matrix.PrintMatrix(std::cout, kirgofMatrix);
-        std::cout << "Minor_1_1 of kirgof is:" << std::endl;
+        std::cout << "Minor of kirgof is:" << std::endl;
         matrix.PrintMatrix(std::cout, minor_1_1);
 
         double countTree = matrix.GetCountTree();

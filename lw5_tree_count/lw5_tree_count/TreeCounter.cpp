@@ -99,7 +99,7 @@ void TreeCounter::PrintMatrix(std::ostream& out, Matrix matrix)
     out << std::defaultfloat;
 }
 
-Matrix TreeCounter::GetMinor_1_1() const
+Matrix TreeCounter::GetMinor() const
 {
     Matrix minor;
     for (size_t y = 1; y < m_items.size(); ++y)
@@ -135,43 +135,73 @@ void TreeCounter::AddWithMultiplyLine(Matrix& matrix, size_t line, size_t sumLin
     }
 }
 
+bool TreeCounter::SwapColumn(Matrix& minor, size_t x)
+{
+    size_t xSwap = x + 1;
+    
+    while (xSwap < minor.size() && minor[x][xSwap] == 0)
+        ++xSwap;
+
+    if (minor[x][xSwap] == 0)
+        return false;
+
+    for (size_t i = 0; i < minor.size(); ++i)
+    {
+        double hold = minor[i][x];
+        minor[i][x] = minor[i][xSwap];
+        minor[i][xSwap] = hold;
+    }
+
+    return true;
+}
+
 double TreeCounter::GetCountTree() const
 {
-    Matrix minor = GetMinor_1_1();
+    double answer = 1.;
+
+    Matrix minor = GetMinor();
     for (size_t y = 1; y < minor.size(); ++y)
     {
         for (size_t x = 0; x < y; ++x)
         {
             double value = minor[y][x];
+
             if (value == 0)
-            {
                 continue;
+            
+            size_t sub{};
+            size_t sumLineIndex{};
+            double upValue{};
+            
+            do
+            {
+                ++sub;
+                sumLineIndex = y - sub;
+                upValue = minor[sumLineIndex][x];
+            } while (upValue == 0 && x != sumLineIndex);
+            
+            if (upValue == 0 && x == sumLineIndex)
+            {
+                if (!SwapColumn(minor, x))
+                    return 0;
+                upValue = minor[sumLineIndex][x];
+                answer *= -1;
             }
-            size_t sub = 1;
-            size_t sumLine = y - sub;
-            double upValue = minor[sumLine][x];
+
             if (upValue == 1)
             {
                 AddLine(minor, y);
                 continue;
             }
-            while (upValue == 0)
-            {
-                ++sub;
-                sumLine = (y - sub) % minor.size();
-                upValue = minor[sumLine][x];
-            }
 
-            AddWithMultiplyLine(minor, y, sumLine, -value / upValue);
+            AddWithMultiplyLine(minor, y, sumLineIndex, -value / upValue);
 
             std::cout << "Minor after transformations is" << std::endl;
             PrintMatrix(std::cout, minor);
         }
     }
 
-    double answer = 1.;
-
     for (size_t i = 0; i < minor.size(); ++i)
         answer *= minor[i][i];
-    return answer; // static_cast<int>
+    return static_cast<int>(answer); // 
 }
